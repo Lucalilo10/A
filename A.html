@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رومانسي</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .big-A {
+            position: relative;
+            font-size: 30vw;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ccff, #ff00cc);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rainbow 8s ease infinite, pulse 2s ease infinite;
+            text-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+            z-index: 2;
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1) }
+            50% { transform: scale(1.1) }
+            100% { transform: scale(1) }
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: white;
+            animation: sparkle 1s ease-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="big-A">A</div>
+    
+    <div class="hearts" id="hearts-container"></div>
+    <div class="sparkles" id="sparkles-container"></div>
+    
+    <script>
+        // إنشاء القلوب العائمة
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartTypes = ['❤️', '💖', '💗', '💘', '💓', '💕', '💞', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+                
+                // وضع عشوائي في الجزء السفلي من الشاشة
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.bottom = '-50px';
+                
+                // سرعة ووقت مختلف لكل قلب
+                heart.style.animationDuration = 3 + Math.random() * 7 + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(heart);
+                
+                // إزالة القلب بعد انتهاء الحركة
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000);
+            }, 300);
+        }
+        
+        // إنشاء البريق المتوهج
+        function createSparkles() {
+            const container = document.getElementById('sparkles-container');
+            
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                
+                // وضع عشوائي حول الحرف A
+                sparkle.style.left = 50 + (Math.random() - 0.5) * 40 + 'vw';
+                sparkle.style.top = 50 + (Math.random() - 0.5) * 40 + 'vh';
+                
+                // لون عشوائي
+                const colors = ['#ff00cc', '#33ff33', '#3333ff', '#ffff00', '#00ffff'];
+                sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // حجم وتأخير عشوائي
+                sparkle.style.width = sparkle.style.height = (2 + Math.random() * 6) + 'px';
+                sparkle.style.animationDelay = Math.random() + 's';
+                
+                container.appendChild(sparkle);
+                
+                // إزالة البريق بعد انتهاء الحركة
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }, 100);
+        }
+        
+        // بدء التأثيرات
+        createHearts();
+        createSparkles();
+    </script>
+</body>
+</html>
